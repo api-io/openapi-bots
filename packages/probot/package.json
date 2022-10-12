@@ -1,6 +1,6 @@
 {
   "name": "@api-ci/probot",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": true,
   "description": "A Probot app",
   "author": "dinavinter",
@@ -31,10 +31,8 @@
   "engines": {
     "node": ">= 10.13.0"
   },
-  
   "publishConfig": {
     "@api-ci:registry": "https://npm.pkg.github.com/openapi-bots",
-
     "access": "public"
   }
 }
