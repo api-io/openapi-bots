@@ -1,0 +1,29 @@
+{
+  "name": "@api-ci/bundle",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "dinavinter <dina.vinter@sap.com>",
+  "homepage": "https://github.com/dinavinter/openapi-bots#readme",
+  "license": "ISC",
+  "main": "lib/bundle.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dinavinter/openapi-bots.git"
+  },
+  "scripts": {
+    "test": "node ./__tests__/@api-ci/bundle.test.js"
+  },
+  "bugs": {
+    "url": "https://github.com/dinavinter/openapi-bots/issues"
+  }
+}
