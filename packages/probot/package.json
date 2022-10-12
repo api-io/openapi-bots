@@ -5,16 +5,30 @@
   "description": "A Probot app",
   "author": "dinavinter",
   "license": "ISC",
-  "homepage": "https://github.com//",
+  "homepage": "https://github.com/api-io/openapi-bots#readme",
+  "main": "lib/index.js",
+  "directories": {
+    "src":"src",
+    "lib": "lib",
+    "test": "test"
+  },
+  "files": [
+    "lib"
+  ],
   "keywords": [
     "probot",
     "github",
     "probot-app"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -p tsconfig.json",
     "start": "probot run ./lib/index.js",
-    "test": "jest"
+    "test": "jest" ,
+    "dev": "nodemon",
+    "lint": "eslint src/**/*.ts",
+    "precommit": "lint-staged",
+    "coverage": "jest --coverage",
+    "test:watch": "jest --watch --notify --notifyMode=change --coverage"
   },
   "dependencies": {
     "probot": "^12.2.4"
@@ -26,7 +40,9 @@
     "nock": "^13.0.5",
     "smee-client": "^1.2.2",
     "ts-jest": "^26.4.4",
-    "typescript": "^4.1.3"
+    "typescript": "^4.1.3",
+    "nodemon": "2.0.20"
+
   },
   "engines": {
     "node": ">= 10.13.0"

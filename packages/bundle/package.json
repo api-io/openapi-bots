@@ -22,9 +22,9 @@
     "url": "git+https://github.com/api-io/openapi-bots.git"
   },
   "scripts": {
-    "test": "node ./__tests__/@api-io/bundle.test.js"
   },
   "bugs": {
     "url": "https://github.com/api-io/openapi-bots/issues"
-  }
+  },
+  "gitHead": "091b5e35bd3a9e0a5856d532bc9ddc3a8d066298"
 }
