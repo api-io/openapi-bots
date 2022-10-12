@@ -1,5 +1,5 @@
 {
-  "name": "@api-ci/bundle",
+  "name": "@api-ci/bundle", 
   "version": "1.0.1",
   "description": "> TODO: description",
   "author": "dinavinter <dina.vinter@sap.com>",
@@ -13,7 +13,10 @@
   "files": [
     "lib"
   ],
+  
   "publishConfig": {
+    "@api-ci:registry": "https://npm.pkg.github.com/openapi-bots",
+
     "access": "public"
   },
   "repository": {
