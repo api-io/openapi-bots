@@ -1,6 +1,6 @@
 {
   "name": "@api-io/bundle",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "> TODO: description",
   "author": "dinavinter <dina.vinter@sap.com>",
   "homepage": "https://github.com/api-io/openapi-bots#readme",
@@ -21,8 +21,7 @@
     "type": "git",
     "url": "git+https://github.com/api-io/openapi-bots.git"
   },
-  "scripts": {
-  },
+  "scripts": {},
   "bugs": {
     "url": "https://github.com/api-io/openapi-bots/issues"
   },
