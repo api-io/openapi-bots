@@ -1,10 +1,9 @@
-FROM node:12-slim
-WORKDIR /usr/src/app
-COPY package.json package-lock.json ./
-RUN npm ci --production
-RUN npm cache clean --force
-ENV NODE_ENV="production"
+FROM node:18
+ 
+ENV PATH=$PATH:/app/node_modules/.bin
+WORKDIR /app
 COPY . .
-EXPOSE 3000
-CMD ["npm", "start"]
+RUN npm install --production && npm run build
 
+ENTRYPOINT ["probot", "receive"]
+CMD ["/app/lib/index.js"]
