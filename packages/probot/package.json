@@ -1,5 +1,5 @@
 {
-  "name": "@api-ci/probot",
+  "name": "@api-io/probot",
   "version": "1.0.3",
   "private": true,
   "description": "A Probot app",
@@ -32,7 +32,7 @@
     "node": ">= 10.13.0"
   },
   "publishConfig": {
-    "@api-ci:registry": "https://npm.pkg.github.com/openapi-bots",
+    "@api-io:registry": "https://npm.pkg.github.com/api-io",
     "access": "public"
   }
 }

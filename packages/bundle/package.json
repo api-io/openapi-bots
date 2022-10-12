@@ -1,9 +1,9 @@
 {
-  "name": "@api-ci/bundle",
+  "name": "@api-io/bundle",
   "version": "1.0.3",
   "description": "> TODO: description",
   "author": "dinavinter <dina.vinter@sap.com>",
-  "homepage": "https://github.com/dinavinter/openapi-bots#readme",
+  "homepage": "https://github.com/api-io/openapi-bots#readme",
   "license": "ISC",
   "main": "lib/bundle.js",
   "directories": {
@@ -14,17 +14,17 @@
     "lib"
   ],
   "publishConfig": {
-    "@api-ci:registry": "https://npm.pkg.github.com/openapi-bots",
+    "@api-io:registry": "https://npm.pkg.github.com/api-io",
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dinavinter/openapi-bots.git"
+    "url": "git+https://github.com/api-io/openapi-bots.git"
   },
   "scripts": {
-    "test": "node ./__tests__/@api-ci/bundle.test.js"
+    "test": "node ./__tests__/@api-io/bundle.test.js"
   },
   "bugs": {
-    "url": "https://github.com/dinavinter/openapi-bots/issues"
+    "url": "https://github.com/api-io/openapi-bots/issues"
   }
 }

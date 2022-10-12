@@ -1,11 +1,11 @@
-# `@api-ci/bundle`
+# `@api-io/bundle`
 
 > TODO: description
 
 ## Usage
 
 ```
-const bundle = require('@api-ci/bundle');
+const bundle = require('@api-io/bundle');
 
 // TODO: DEMONSTRATE API
 ```
