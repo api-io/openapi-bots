@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
-module.exports = bundle;
+module.exports = bundle
 
 function bundle() {
-    return "Hello from bundle";
+  return 'Hello from bundle'
 }

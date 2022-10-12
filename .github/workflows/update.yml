@@ -1,5 +1,5 @@
 name: Update
-"on":
+'on':
   repository_dispatch:
     types:
       - octokit/openapi release
@@ -35,7 +35,7 @@ jobs:
       - run: echo "OCTOKIT_OPENAPI_VERSION => $OCTOKIT_OPENAPI_VERSION"
       - uses: gr2m/await-npm-package-version-action@v1
         with:
-          package: "@octokit/openapi"
+          package: '@octokit/openapi'
           version: ${{ env.OCTOKIT_OPENAPI_VERSION }}
       - name: Update & generate types
         run: |

@@ -4,7 +4,32 @@
   "workspaces": [
     "packages/*"
   ],
+  "scripts": {
+    "commit": "git-cz",
+    "bootstrap": "npx lerna bootstrap",
+    "publish:ci": "lerna publish from-package --yes",
+    "version:ci": "lerna version --yes --conventional-commits --create-release github --message 'chore(release): publish'",
+    "lint": "prettier --check ./**/*.ts",
+    "lint:fix": "prettier --write ./**/*.ts "
+
+  },
+
+   "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
   "devDependencies": {
-    "lerna": "^5.4.3"
+    "lerna": "^5.4.3",
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "^3.1.0",
+    "prettier": "2.7.1",
+    "@typescript-eslint/eslint-plugin": "4.33.0",
+    "@typescript-eslint/parser": "4.33.0",
+    "eslint": "7.32.0",
+    "eslint-config-prettier": "7.2.0",
+    "eslint-plugin-prettier": "3.4.1"
+
+
   }
 }
