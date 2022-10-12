@@ -4,7 +4,6 @@ COPY . .
 ENV NODE_ENV="production"
 RUN npx lerna bootstrap  --force-local
 RUN npx lerna run build
-RUN npx lerna run start
 EXPOSE 3000
 ENTRYPOINT ["probot", "receive"]
 CMD ["/app/packages/lib/index.js"]
