@@ -42,7 +42,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish packages npm regisrty
-        run:  yarn publish:ci --registry https://registry.npmjs.org --yes
+        run:  yarn publish:ci --registry https://registry.npmjs.org --yes --no-verify-access
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
