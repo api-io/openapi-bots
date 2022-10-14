@@ -1,7 +1,6 @@
 {
   "name": "@api-io/bundle",
-  "version": "0.0.1",
-  "type": "commonjs",
+  "version": "1.0.10",
   "homepage": "https://github.com/api-io/openapi-bots#readme",
   "main": "lib/index.js",
   "directories": {
@@ -12,6 +11,16 @@
   "files": [
     "lib"
   ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "probot run ./lib/index.js",
+    "test": "jest",
+    "dev": "nodemon",
+    "lint": "eslint src/**/*.ts",
+    "precommit": "lint-staged",
+    "coverage": "jest --coverage",
+    "test:watch": "jest --watch --notify --notifyMode=change --coverage"
+  },
   "dependencies": {
     "@redocly/openapi-core": "^1.0.0-beta.111",
     "openapi-types": "^12.0.2",
@@ -26,7 +35,6 @@
     "type": "git",
     "url": "git+https://github.com/api-io/openapi-bots.git"
   },
-  "scripts": {},
   "bugs": {
     "url": "https://github.com/api-io/openapi-bots/issues"
   },
