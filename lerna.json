@@ -4,7 +4,7 @@
   "npmClient": "yarn",
   "useNx": true,
   "useWorkspaces": true,
-  "version": "1.0.11",
+  "version": "2.0.0",
   "command": {
     "publish": {
       "registry": "https://npm.pkg.github.com/api-io"
