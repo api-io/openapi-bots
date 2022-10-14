@@ -1,16 +1,39 @@
-version: '3.8'
+version: "3"
+
 services:
   web:
+    container_name: bot
     build:
-      context: ./packages/probot
-      target: dev
-    volumes:
-      - .:/src
-      - ./pk.pem:/app/pk.pem:ro
-    command: npm run start:dev
+      context: .
+      dockerfile: ./packages/probot/Dockerfile
+    restart: always
     ports:
-      - "3000:3000"
+      - 3000:3000
+    networks:
+      - app_network
     environment:
-      NODE_ENV: development
-      DEBUG: nodejs-docker-express:*
+      APP_ID: ${APP_ID} 
+      CLIENT_ID: ${CLIENT_ID} 
+      LOG_LEVEL: debug
+      WEBHOOK_PATH: /webhook
+      GHE_HOST: ${GHE_HOST}
 
+
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: ./apps/api/Dockerfile
+    restart: always
+    ports:
+      - 3001:3001
+    networks:
+      - app_network
+
+# Define a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+networks:
+  app_network:
+    external: true
+
+ 

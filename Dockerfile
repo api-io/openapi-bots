@@ -12,7 +12,7 @@ COPY . .
 RUN npx lerna run build
 EXPOSE 3000
 
-CMD ["lerna", "run start"]
+CMD ["yarn", "start"]
 
 ARG VCS_REF
 ARG BUILD_DATE
@@ -21,3 +21,5 @@ LABEL \
   org.opencontainers.image.created=$BUILD_DATE
 
  
+
+#  git@github.com:uber-workflow/probot-app.git
