@@ -195,4 +195,3 @@ export async function reportIssues(
     console.log('Unable to post annotation batch')
   }
 }
-
