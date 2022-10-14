@@ -1,2 +1,2 @@
-import * as bundle from './lib/bundle';
-export default bundle;
+import * as bundle from './lib/bundle'
+export default bundle
