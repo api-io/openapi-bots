@@ -13,7 +13,7 @@
     "publish:npm": "lerna publish from-package --registry https://registry.npmjs.org --yes --no-verify-access",
     "publish:gh": "lerna publish from-package --registry https://npm.pkg.github.com/api-io --yes --no-verify-access",
 
-    "version:ci": "lerna version --yes --conventional-commits --create-release github --message 'chore(release): publish'",
+    "version:ci": "lerna version patch --yes --conventional-commits --create-release github --message 'chore(release): publish'",
     "lint": "prettier --check ./**/*.ts",
     "lint:fix": "prettier --write ./**/*.ts "
 
