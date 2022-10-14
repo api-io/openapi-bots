@@ -1,3 +1,2 @@
-import * as bundle from './lib/bundle'
-
-export default bundle
+export * from './lib/bundle'
+export * from './lib/probot'
