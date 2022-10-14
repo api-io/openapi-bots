@@ -21,7 +21,6 @@ const OpenApiBundleProbot: ApplicationFunction = (app) => {
     if (!files) return 'no changes'
     files.map((x) => x.raw_url)
     await bundleFiles({ octokit, repo, owner, ref, files })
-
   })
 }
 

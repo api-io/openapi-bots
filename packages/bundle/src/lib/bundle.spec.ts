@@ -1,7 +1,7 @@
-import { bundle } from './bundle';
+import { bundle } from './bundle'
 
 describe('bundle', () => {
   it('should work', () => {
-    expect(bundle()).toEqual('bundle');
-  });
-});
+    expect(bundle()).toEqual('bundle')
+  })
+})
