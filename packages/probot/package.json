@@ -47,7 +47,6 @@
     "node": ">= 10.13.0"
   },
   "publishConfig": {
-    "@api-io:registry": "https://npm.pkg.github.com/api-io",
     "access": "public"
   }
 }
