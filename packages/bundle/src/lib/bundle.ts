@@ -1,11 +1,11 @@
 import { loadConfig, bundle, NormalizedProblem } from '@redocly/openapi-core'
-import { Probot, ProbotOctokit, ApplicationFunction } from 'probot'
+import { ProbotOctokit, ApplicationFunction } from 'probot'
 import { title } from 'process'
 import * as yaml from 'js-yaml'
 
 type Octokit = InstanceType<typeof ProbotOctokit>
-const OpenApiBundleProbot: ApplicationFunction = (app) => {
-  app.on('push', async (context) => {
+export const OpenApiBundleProbot: ApplicationFunction = (app) => {
+  app.on('push', async (context): Promise<string> => {
     const push = context.payload
     const repo = push.repository.name
     const owner = push.sender.login
@@ -21,6 +21,7 @@ const OpenApiBundleProbot: ApplicationFunction = (app) => {
     if (!files) return 'no changes'
     files.map((x) => x.raw_url)
     await bundleFiles({ octokit, repo, owner, ref, files })
+    return 'ok'
   })
 }
 
