@@ -1,0 +1,11 @@
+{
+  "body": {
+    "content": "",
+    "file": false,
+    "fileSize": false
+  },
+  "headers": {},
+  "method": "GET",
+  "title": "bundle",
+  "url": "http://localhost:3006/app/bundle?installation=30207701&repo=api&owner=dinavinter&branch=main"
+}

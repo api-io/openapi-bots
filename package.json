@@ -9,32 +9,46 @@
     "bootstrap": "npx lerna bootstrap",
     "build": "npx lerna run build",
     "start": "npx lerna run start",
-    "prestart": "npx lerna run build", 
+    "prestart": "npx lerna run build",
     "publish:npm": "lerna publish from-package --registry https://registry.npmjs.org --yes --no-verify-access",
     "publish:gh": "lerna publish from-package --registry https://npm.pkg.github.com/api-io --yes --no-verify-access",
-
     "version:ci": "lerna version patch --yes --conventional-commits --create-release github --message 'chore(release): publish'",
     "lint": "prettier --check ./**/*.ts",
     "lint:fix": "prettier --write ./**/*.ts "
-
   },
-
-   "config": {
+  "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
   "devDependencies": {
-    "lerna": "^5.4.3",
-    "commitizen": "^4.2.4",
-    "cz-conventional-changelog": "^3.1.0",
-    "prettier": "2.7.1",
+    "@nrwl/cypress": "15.0.0",
+    "@nrwl/jest": "15.0.0",
+    "@nrwl/web": "15.0.0",
+    "@nrwl/webpack": "15.0.0",
+    "@types/jest": "28.1.1",
+    "@types/node": "16.11.7",
     "@typescript-eslint/eslint-plugin": "4.33.0",
     "@typescript-eslint/parser": "4.33.0",
+    "babel-jest": "28.1.1",
+    "commitizen": "^4.2.4",
+    "cypress": "^10.7.0",
+    "cz-conventional-changelog": "^3.1.0",
     "eslint": "7.32.0",
     "eslint-config-prettier": "7.2.0",
-    "eslint-plugin-prettier": "3.4.1"
-
-
+    "eslint-plugin-cypress": "^2.10.3",
+    "eslint-plugin-prettier": "3.4.1",
+    "jest": "28.1.1",
+    "jest-environment-jsdom": "28.1.1",
+    "lerna": "^5.4.3",
+    "nx": "15.0.0",
+    "prettier": "2.7.1",
+    "ts-jest": "28.0.5",
+    "ts-node": "10.9.1"
+  },
+  "dependencies": {
+    "core-js": "^3.6.5",
+    "regenerator-runtime": "0.13.7",
+    "tslib": "^2.3.0"
   }
 }

@@ -1,0 +1,42 @@
+{
+  "name": "@api-io/style-guide-gigya",
+  "version": "1.1.0",
+  "author": "dinavinter <dina.vinter@sap.com>",
+  "homepage": "https://github.com/api-io/openapi-bots#readme",
+  "license": "ISC",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+
+
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/api-io/openapi-bots.git"
+  },
+  "description": "Custom Spectral API Linter ruleset for Baloise API Guidelines based on Zalando API guidelines.",
+  "main": ".spectral.yml",
+  "scripts": {
+    "lint": "eslint \"{*/**/*.js,*/**/*.ts}\"",
+    "lint-fix": "npm run lint -- --fix",
+    "test": "jest"
+  },
+  "bugs": {
+    "url": "https://github.com/api-io/openapi-bots/issues"
+  },
+  "gitHead": "09f84f7574bd93c7aec7472864738c49de931f00",
+  "devDependencies": {
+    "@stoplight/spectral-cli": "^6.3.0",
+    "@stoplight/spectral-ruleset-bundler": "^1.2.1",
+    "@types/jest": "27.4.0",
+    "@types/js-yaml": "4.0.5",
+    "@typescript-eslint/eslint-plugin": "5.10.1",
+    "@typescript-eslint/parser": "5.10.1",
+    "js-yaml": "4.0.0",
+    "ts-jest": "27.1.3"
+  }
+}
+

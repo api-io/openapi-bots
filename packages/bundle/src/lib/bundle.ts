@@ -1,7 +1,13 @@
-import { loadConfig, bundle, NormalizedProblem } from '@redocly/openapi-core'
+import {
+  bundle,
+  NormalizedProblem,
+  RawConfig,
+  createConfig,
+} from '@redocly/openapi-core'
 import { ProbotOctokit } from 'probot'
 import { title } from 'process'
 import * as yaml from 'js-yaml'
+// import { components } from '@octokit/openapi-types'
 
 type Octokit = InstanceType<typeof ProbotOctokit>
 /*
@@ -69,6 +75,9 @@ function generateSummary(problems: NormalizedProblem[]) {
 type PromiseReturnType<T> = T extends Promise<infer Return> ? Return : T
 
 type BundleRespnse = PromiseReturnType<ReturnType<typeof bundle>>
+type BundleWithError = BundleRespnse & { problems: BundleRespnse['problems'] }
+type BundleWithNoError = BundleRespnse & { bundle: BundleRespnse['bundle'] }
+type BundleOrError = BundleWithNoError | BundleWithError
 
 export async function bundleFiles({
   octokit,
@@ -83,7 +92,11 @@ export async function bundleFiles({
   ref: string
   files: { raw_url: string; filename: string }[]
 }): Promise<void> {
-  const config = await loadConfig({ configPath: '.redocly.yaml' })
+  const config = await octokit.config.get<RawConfig>({
+    path: '.redocly.yaml',
+    owner: owner,
+    repo: repo,
+  })
 
   const branch = `api-bundle-${Math.floor(Math.random() * 9999)}`
 
@@ -104,37 +117,94 @@ export async function bundleFiles({
   const bundleStream = files.map(async (file) => {
     return {
       ...file,
-      bundle: await bundle({ ref: file.raw_url, config }),
+      ...(await bumdle_file(file, config.config)),
     }
   })
 
   for await (const bundled of bundleStream) {
-    if (bundled.bundle.problems) {
+    if (hasProblems(bundled)) {
       await reportIssues(octokit, owner, repo, ref, bundled)
     }
 
-    // update bundle
-    await octokit.repos.createOrUpdateFileContents({
-      repo,
-      owner,
-      path: bundled.filename,
-      message: `update bundled ${bundled.filename}`,
-      content: Buffer.from(yaml.dump(bundled.bundle.bundle.parsed)).toString(
-        'base64'
-      ),
-      branch, // the branch name we used when creating a Git reference
-    })
+    if (hasBundle(bundled)) {
+      // update bundle
+      await octokit.repos.createOrUpdateFileContents({
+        repo,
+        owner,
+        path: bundled.filename,
+        message: `update bundled ${bundled.filename}`,
+        content: Buffer.from(yaml.dump(bundled.bundle.parsed)).toString(
+          'base64'
+        ),
+        branch, // the branch name we used when creating a Git reference
+      })
+    }
+
+    if (isError(bundled)) {
+      console.log(bundled.error)
+    }
   }
 
   await octokit.pulls.create({
     repo,
     owner,
     title: 'API Bundling',
-    head: branch,
-    base: ref,
-    body: 'API bundling!',
+    head: branch, //`heads/${branch}`
+    base: ref.replace('heads/', ''),
+    body: 'API bundling bot',
     maintainer_can_modify: true,
   })
+}
+
+async function bumdle_file(
+  file: {
+    raw_url: string
+    filename: string
+  },
+  config: RawConfig
+): Promise<BundleOrError | { error: unknown }> {
+  try {
+    return await bundle({
+      ref: file.raw_url,
+      config: await createConfig(config),
+      keepUrlRefs: true,
+    })
+  } catch (error) {
+    return { error }
+  }
+}
+
+// bundle: {source:new Source(file.raw_url, file.raw_url }, parsed: undefined }
+//   problems: [
+//     {
+//       message: error.message,
+//       ruleId: '',
+//       severity: 'warn',
+//       location: [],
+//       suggest: ['is it an API file?'],
+//       ignored: true,
+//     },
+//   ],
+// }
+function hasProblems(
+  bundle: BundleWithError | BundleWithNoError | { error: unknown }
+): bundle is BundleWithError {
+  return (
+    (<BundleWithError>bundle).problems !== undefined &&
+    (<BundleWithError>bundle).problems.length > 0
+  )
+}
+
+function isError(
+  bundle: BundleWithError | BundleWithNoError | { error: unknown }
+): bundle is { error: unknown } {
+  return (<{ error: unknown }>bundle).error !== undefined
+}
+
+function hasBundle(
+  bundle: BundleWithError | BundleWithNoError | { error: unknown }
+): bundle is BundleWithNoError {
+  return (<BundleWithNoError>bundle).bundle !== undefined
 }
 
 export async function reportIssues(
@@ -142,29 +212,11 @@ export async function reportIssues(
   owner: string,
   repo: string,
   ref: string,
-  bundled: {
-    bundle: BundleRespnse
-    sha?: string
-    filename?: string
-    status?:
-      | 'added'
-      | 'removed'
-      | 'changed'
-      | 'renamed'
-      | 'modified'
-      | 'copied'
-      | 'unchanged'
-    additions?: number
-    deletions?: number
-    changes?: number
-    blob_url?: string
-    raw_url?: string
-    contents_url?: string
-    patch?: string | undefined
-    previous_filename?: string | undefined
-  }
+  bundle: BundleOrError
 ): Promise<void> {
-  const data = await octokit.checks.create({
+  const {
+    data: { id, name },
+  } = await octokit.checks.create({
     owner,
     repo,
     name: title,
@@ -172,26 +224,46 @@ export async function reportIssues(
     status: 'in_progress',
     started_at: new Date(),
   })
-  const checkRunId = data.data.id
-
-  console.log(`Check Run Id - ${checkRunId}`)
 
   try {
     await octokit.checks.update({
       owner,
       repo,
-      name: data.data.name,
-      check_run_id: checkRunId,
+      name: name,
+      check_run_id: id,
       status: 'completed',
       completed_at: new Date(),
       conclusion: 'failure',
       output: {
         title,
-        summary: generateSummary(bundled.bundle.problems),
-        annotations: bundled.bundle.problems,
+        summary: generateSummary(bundle.problems),
+        annotations: bundle.problems.map(formatAnnotaion(bundle)),
       },
     })
-  } catch {
+  } catch (error) {
     console.log('Unable to post annotation batch')
+    console.log(error)
   }
 }
+function formatAnnotaion(bundle: BundleWithError) {
+  return (value: NormalizedProblem) => {
+    return {
+      path: bundle.bundle.source.absoluteRef,
+      start_line: bundle.bundle.source
+        .getLines()
+        .indexOf(value.location[0].source.body),
+      end_line: bundle.bundle.source
+        .getLines()
+        .indexOf(value.location[value.location.length - 1].source.body),
+      annotation_level: value.severity,
+      blob_href: bundle.bundle.source.absoluteRef,
+      message: value.message,
+      title: value.ruleId,
+    }
+  }
+}
+/*
+components['schemas']['check-annotation']
+ paths['/repos/{owner}/{repo}/check-runs']['post']['requestBody']['content']['application/json']['output']['annotations?']
+ 
+ */

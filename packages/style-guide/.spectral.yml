@@ -1,0 +1,1 @@
+extends: [https://raw.github.tools.sap/cdc-ciam/rulsets/main/.spectral/rules.spectral.yaml?token=GHSAT0AAAAAAAAIJJGSCSOPJNLVTDFO7RRGY2XJWAA] # default flavor

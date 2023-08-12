@@ -3,7 +3,16 @@
     "default": {
       "runner": "nx/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "test"]
+        "cacheableOperations": [
+          "build",
+          "start",
+          "test",
+          "dev",
+          "lint",
+          "precommit",
+          "coverage",
+          "test:watch"
+        ]
       }
     }
   },
@@ -12,9 +21,28 @@
       "dependsOn": ["build"]
     },
     "build": {
-      "dependsOn": ["^build", "prebuild"]
+      "dependsOn": ["^build", "prebuild"],
+      "outputs": ["{projectRoot}/lib"]
     },
     "test": {
-      "dependsOn": ["build"]
+      "dependsOn": ["build"],
+      "outputs": ["{projectRoot}/test"],
+      "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"]
     }
-  }}
+  },
+  "defaultBase": "main",
+  "defaultProject": "web",
+  "generators": {
+    "@nrwl/web:application": {
+      "style": "styl",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/web:library": {
+      "style": "styl",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    }
+  }
+}
